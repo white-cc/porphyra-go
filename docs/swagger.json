@@ -1,0 +1,123 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "个人博客接口列表",
+        "title": "blog后端接口",
+        "contact": {},
+        "version": "0.1"
+    },
+    "paths": {
+        "/article": {
+            "get": {
+                "summary": "获取所有文章大纲",
+                "responses": {}
+            },
+            "post": {
+                "summary": "提交文章",
+                "responses": {}
+            },
+            "delete": {
+                "summary": "删除文章",
+                "responses": {}
+            }
+        },
+        "/article/{id}": {
+            "get": {
+                "summary": "获取单个文章",
+                "responses": {}
+            }
+        },
+        "/comment": {
+            "get": {
+                "summary": "获取文章评论",
+                "responses": {}
+            },
+            "post": {
+                "summary": "提交文章评论",
+                "responses": {}
+            },
+            "delete": {
+                "summary": "删除文章评论",
+                "responses": {}
+            }
+        },
+        "/login": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "用户登录接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Name",
+                        "name": "name",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "State",
+                        "name": "state",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "CreatedBy",
+                        "name": "created_by",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":200,\"data\":{},\"msg\":\"ok\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/signin": {
+            "post": {
+                "description": "这是一个用户登录接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "用户注册接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Name",
+                        "name": "name",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":200,\"data\":{},\"msg\":\"ok\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "{\"code\":404,\"data\":{},\"msg\":\"404 not find\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "{\"code\":500,\"data\":{},\"msg\":\"server error\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

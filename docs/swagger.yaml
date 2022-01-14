@@ -1,0 +1,82 @@
+info:
+  contact: {}
+  description: 个人博客接口列表
+  title: blog后端接口
+  version: "0.1"
+paths:
+  /article:
+    delete:
+      responses: {}
+      summary: 删除文章
+    get:
+      responses: {}
+      summary: 获取所有文章大纲
+    post:
+      responses: {}
+      summary: 提交文章
+  /article/{id}:
+    get:
+      responses: {}
+      summary: 获取单个文章
+  /comment:
+    delete:
+      responses: {}
+      summary: 删除文章评论
+    get:
+      responses: {}
+      summary: 获取文章评论
+    post:
+      responses: {}
+      summary: 提交文章评论
+  /login:
+    post:
+      parameters:
+      - description: Name
+        in: query
+        name: name
+        required: true
+        type: string
+      - description: State
+        in: query
+        name: state
+        type: integer
+      - description: CreatedBy
+        in: query
+        name: created_by
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: 用户登录接口
+  /signin:
+    post:
+      consumes:
+      - application/json
+      description: 这是一个用户登录接口
+      parameters:
+      - description: Name
+        in: query
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+        "404":
+          description: '{"code":404,"data":{},"msg":"404 not find"}'
+          schema:
+            type: string
+        "500":
+          description: '{"code":500,"data":{},"msg":"server error"}'
+          schema:
+            type: string
+      summary: 用户注册接口
+swagger: "2.0"
