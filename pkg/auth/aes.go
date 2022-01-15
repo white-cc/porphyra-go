@@ -1,4 +1,4 @@
-package jwt
+package auth
 
 import (
 	"bytes"
@@ -20,42 +20,42 @@ func PKCS7UnPadding(origData []byte) []byte {
 	return origData[:(length - unpadding)]
 }
 
-func AesEncrypt(origData []byte) (string, error) {
+func AesEncrypt(origData []byte) ([]byte, error) {
 	aes_key := os.Getenv("aes_key")
 	if aes_key == "" {
 		err := errors.New("no aes_key")
-		return "", err
+		return nil, err
 	}
 
 	key := []byte(aes_key)
 	block, err := aes.NewCipher(key)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 	blockSize := block.BlockSize()                              //块大小
 	origData = PKCS7Padding(origData, blockSize)                //填充
 	blockMode := cipher.NewCBCEncrypter(block, key[:blockSize]) //加密器
 	crypted := make([]byte, len(origData))
 	blockMode.CryptBlocks(crypted, origData) //加密
-	return string(crypted), nil
+	return crypted, nil
 }
 
-func AesDecrypt(crypted []byte) (string, error) {
+func AesDecrypt(crypted []byte) ([]byte, error) {
 	aes_key := os.Getenv("aes_key")
 	if aes_key == "" {
 		err := errors.New("no aes_key")
-		return "", err
+		return nil, err
 	}
 	key := []byte(aes_key)
 	block, err := aes.NewCipher(key)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 	blockSize := block.BlockSize()
 	blockMode := cipher.NewCBCDecrypter(block, key[:blockSize])
 	origData := make([]byte, len(crypted))
 	blockMode.CryptBlocks(origData, crypted)
 	origData = PKCS7UnPadding(origData)
-	return string(origData), nil
+	return origData, nil
 
 }

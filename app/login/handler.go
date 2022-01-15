@@ -5,6 +5,7 @@ import "github.com/gin-gonic/gin"
 type Login struct {
 	User     string
 	Password string
+	Email    string
 }
 
 // @summary 用户注册接口
