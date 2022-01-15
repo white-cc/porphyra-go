@@ -7,7 +7,7 @@ import (
 )
 
 func TestAes(t *testing.T) {
-	os.Setenv("aes_key", "helloworld123456")
+	os.Setenv("aes_key", "0123456789123456")
 	c, err := jwt.AesEncrypt([]byte("123456"))
 	if err != nil {
 		t.Error("encode error", err.Error())
