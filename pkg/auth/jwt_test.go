@@ -2,6 +2,7 @@ package auth_test
 
 import (
 	"blog/pkg/auth"
+	"encoding/hex"
 	"os"
 	"testing"
 )
@@ -19,4 +20,24 @@ func TestAes(t *testing.T) {
 	if string(o) != "123456" {
 		t.Error("compare error")
 	}
+}
+
+func TestJwt(t *testing.T) {
+	os.Setenv("jwt_key", "123456")
+	token, err := auth.CreateToken("123454", []byte("12345"))
+	if err != nil {
+		t.Error(err.Error())
+	}
+	result, err := auth.ParseToken(token)
+	if err != nil {
+		t.Error(err.Error())
+	}
+	t.Log(result.Username + " " + result.Password)
+
+}
+
+func TestTEST(t *testing.T) {
+	temp := []byte("12345")
+	str := hex.EncodeToString(temp)
+	t.Log(str)
 }

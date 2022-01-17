@@ -5,7 +5,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -15,6 +14,7 @@ import (
 var user_coll *mongo.Collection
 
 type User struct {
+	ID       string `bson:"_id"`
 	Username string
 	Password []byte
 	Email    string
@@ -51,11 +51,9 @@ func FindUser(username, password string) (User, error) {
 	filter := bson.D{primitive.E{Key: "username", Value: username}}
 	err := user_coll.FindOne(context.TODO(), filter).Decode(&result)
 	if err == mongo.ErrNoDocuments {
-		log.Fatal("no user")
 		return result, err
 	}
 	if err != nil {
-		log.Fatal(err.Error())
 		return result, err
 	}
 	de_aes_pass, err := auth.AesDecrypt([]byte(result.Password))

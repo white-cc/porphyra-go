@@ -2,6 +2,7 @@ package login
 
 import (
 	"blog/models"
+	"blog/pkg/auth"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -47,11 +48,12 @@ func loginHandler(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"code": 400, "msg": "bad request"})
 		return
 	}
-	_, err := models.FindUser(json.Username, json.Password)
+	user, err := models.FindUser(json.Username, json.Password)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": 500, "msg": err.Error()})
 		return
 	}
-	c.JSON(http.StatusAccepted, gin.H{"code": 200, "msg": "ok"})
+	token, err := auth.CreateToken(user.Username, user.Password)
+	c.JSON(http.StatusAccepted, gin.H{"code": 200, "token": token})
 
 }

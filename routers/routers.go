@@ -1,6 +1,9 @@
 package routers
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/contrib/cors"
+	"github.com/gin-gonic/gin"
+)
 
 type Option func(*gin.Engine)
 
@@ -12,6 +15,7 @@ func Include(opt ...Option) {
 
 func Init() *gin.Engine {
 	e := gin.New()
+	e.Use(cors.Default())
 	for _, opt := range options {
 		opt(e)
 	}

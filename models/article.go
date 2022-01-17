@@ -12,11 +12,13 @@ import (
 var artice_coll *mongo.Collection
 
 type Comment struct {
+	ID       string `bson:"_id"`
 	Username string
 	Text     string
 }
 
 type Article struct {
+	ID       string `bson:"_id"`
 	Username string
 	Name     string
 	Text     string
@@ -34,9 +36,26 @@ func AddAticle(name, username, text, tag string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	id := fmt.Sprintf("%v", result)
+	id := fmt.Sprintf("%v", result.InsertedID)
 	return id, nil
 }
+
+func GetArticle(id string) (Article, error) {
+	var result Article
+	ob_id, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return result, err
+	}
+	err = artice_coll.FindOne(context.TODO(), bson.M{"_id": ob_id}).Decode(&result)
+	if err == mongo.ErrNoDocuments {
+		return result, err
+	}
+	if err != nil {
+		return result, err
+	}
+	return result, nil
+}
+
 func GetAllArticle() ([]Article, error) {
 	var articles []Article
 	cursor, err := artice_coll.Find(context.TODO(), bson.D{{}})
@@ -52,20 +71,19 @@ func GetAllArticle() ([]Article, error) {
 		articles = append(articles, elem)
 	}
 	return articles, nil
-
 }
-func DeleteArticle(name string) error {
-	filter := bson.D{primitive.E{Key: "name", Value: name}}
-	_, err := artice_coll.DeleteOne(context.TODO(), filter)
+func DeleteArticle(id string) error {
+	ob_id, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return err
+	}
+	filter := bson.D{primitive.E{Key: "_id", Value: ob_id}}
+	_, err = artice_coll.DeleteOne(context.TODO(), filter)
 	if err != nil {
 		return err
 	}
 	return nil
 }
-
-// func FindAticles(name string) {
-
-// }
 
 // func ChangeArticle() {
 
