@@ -29,7 +29,7 @@ func AddUser(username, password, email string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	m := User{username, en_aes_pass, email}
+	m := User{Username: username, Password: en_aes_pass, Email: email}
 
 	var temp User
 	filter := bson.D{primitive.E{Key: "username", Value: username}}

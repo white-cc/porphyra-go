@@ -2,12 +2,13 @@ package main
 
 import (
 	"blog/app/article"
-	"blog/app/comment"
 	"blog/app/login"
 	_ "blog/docs"
+	"blog/models"
 	"blog/routers"
 	"log"
 
+	"github.com/joho/godotenv"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
@@ -16,9 +17,12 @@ import (
 // @version 0.1
 // @description 个人博客接口列表
 func main() {
+	godotenv.Load()
 	routers.Include(login.Loadlogin)
 	routers.Include(article.LoadArticle)
-	routers.Include(comment.LoadComment)
+	//TODO
+	// routers.Include(comment.LoadComment)
+	models.Init()
 
 	r := routers.Init()
 

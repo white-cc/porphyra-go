@@ -25,7 +25,7 @@ var doc = `{
     "paths": {
         "/article": {
             "get": {
-                "summary": "获取所有文章大纲",
+                "summary": "获取所有文章",
                 "responses": {}
             },
             "post": {
@@ -34,12 +34,6 @@ var doc = `{
             },
             "delete": {
                 "summary": "删除文章",
-                "responses": {}
-            }
-        },
-        "/article/{id}": {
-            "get": {
-                "summary": "获取单个文章",
                 "responses": {}
             }
         },
@@ -63,30 +57,21 @@ var doc = `{
                     "application/json"
                 ],
                 "summary": "用户登录接口",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Name",
-                        "name": "name",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "description": "State",
-                        "name": "state",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "CreatedBy",
-                        "name": "created_by",
-                        "in": "query"
-                    }
-                ],
                 "responses": {
                     "200": {
-                        "description": "{\"code\":200,\"data\":{},\"msg\":\"ok\"}",
+                        "description": "{\"code\":200 ,\"msg\":\"ok\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "{\"code\":400,\"msg\":\"bad request\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "{\"code\":500,\"msg\":\"server error\"}",
                         "schema": {
                             "type": "string"
                         }
@@ -104,30 +89,21 @@ var doc = `{
                     "application/json"
                 ],
                 "summary": "用户注册接口",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Name",
-                        "name": "name",
-                        "in": "query",
-                        "required": true
-                    }
-                ],
                 "responses": {
                     "200": {
-                        "description": "{\"code\":200,\"data\":{},\"msg\":\"ok\"}",
+                        "description": "{\"code\":200,\"msg\":\"ok\"}",
                         "schema": {
                             "type": "string"
                         }
                     },
-                    "404": {
-                        "description": "{\"code\":404,\"data\":{},\"msg\":\"404 not find\"}",
+                    "400": {
+                        "description": "{\"code\":400,\"msg\":\"bad request\"}",
                         "schema": {
                             "type": "string"
                         }
                     },
                     "500": {
-                        "description": "{\"code\":500,\"data\":{},\"msg\":\"server error\"}",
+                        "description": "{\"code\":500,\"msg\":\"server error\"}",
                         "schema": {
                             "type": "string"
                         }

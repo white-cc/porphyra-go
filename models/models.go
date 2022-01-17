@@ -21,7 +21,8 @@ func Init() {
 	if err != nil {
 		log.Fatal("connect mogodb error")
 	}
-
+	LoadUserdbModel()
+	LoadArticledbModel()
 }
 
 func Close() {
